@@ -4,19 +4,28 @@
 <b-container>
     <b-row align-h="center">
         <b-col cols="8">
-            <b-card title="Inicio de sesión">
-                <b-alert show>Por favor ingrese sus datos:</b-alert>
+            <b-card title="Inicio de sesión" class="my-3">              
+
+                @if ($errors->any())
+                    <b-alert show variant="danger">
+                        @foreach($errors->all() as $error)
+                            <ul class="mb-0">
+                                <li>{{ $error }}</li>
+                            </ul>
+                        @endforeach
+                    </b-alert>
+                @else
+                    <b-alert show>Por favor ingrese sus datos:</b-alert>
+                @endif
 
                 <b-form method="POST" action="{{ route('login') }}">
                     @csrf
 
                     <b-form-group
                         label="Correo electrónico"
-                        label-for="email"
-                        description="We'll never share your email with anyone else.">
+                        label-for="email">
                         <b-form-input type="email"
                           id="email" name="email"
-                          required
                           value="{{ old('email') }}" required autofocus
                           placeholder="example@gmail.com"
                         ></b-form-input>
@@ -27,8 +36,7 @@
                         label-for="password">
                         <b-form-input type="password"
                           id="password" name="password"
-                          required
-                          value="{{ old('email') }}">
+                          required>
                         </b-form-input>
                     </b-form-group>
                     
